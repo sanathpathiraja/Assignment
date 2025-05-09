@@ -5,3 +5,8 @@
 /.vs
 /web_app/.vscode
 /web_api/obj
+/web_api/bin/Debug/net8.0
+/web_api/web_api.csproj.user
+/web_app/obj/Debug
+/web_app/web_app.esproj.user
+/web_app/package-lock.json
