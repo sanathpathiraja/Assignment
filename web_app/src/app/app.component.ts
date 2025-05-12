@@ -29,7 +29,20 @@ export class AppComponent {
 
     this.gridOptions = {
       enableAutoResize: true,
-      enableSorting: true
+      enableSorting: true,
+      gridWidth: '100%',
+      gridHeight: (window.innerHeight * 90) / 100,
+      enableFiltering: true,
+      headerRowHeight: 27,
+      enableGridMenu: false,
+      enableCellNavigation: true,
+      enableCheckboxSelector: false,
+      enableRowSelection: true,
+      multiSelect: false,
+      rowSelectionOptions: {
+        // True (Single Selection), False (Multiple Selections)
+        selectActiveRow: true,
+      },
     };
 
     // fill the dataset with your data (or read it from the DB)
