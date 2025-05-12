@@ -2,7 +2,7 @@
 {
     public class Student
     {
-        // Primary key or unique record identifier for the student
+        // Primary key / unique record identifier for the student
         public int RecId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
