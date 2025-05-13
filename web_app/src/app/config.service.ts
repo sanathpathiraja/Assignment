@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
@@ -31,5 +32,12 @@ export class ConfigService {
   showInfo(msg) {
     this.toastr.info(msg, '', this.ToastConfig);
   }
+
+  public modalConfigLG: NgbModalOptions = {
+    keyboard: true,
+    backdrop: 'static',
+    windowClass: 'modal-primary',
+    size: 'lg'
+  };
 
 }

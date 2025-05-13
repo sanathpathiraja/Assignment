@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AngularGridInstance, Column, GridOption } from 'angular-slickgrid';
 import { StudentAddComponent } from './student-add/student-add.component';
 import { RestAPIService } from './rest-api.service';
@@ -14,12 +14,7 @@ import { ConfigService } from './config.service';
 export class AppComponent {
   title = 'web_app';
 
-  public modalConfigLG: NgbModalOptions = {
-    keyboard: true,
-    backdrop: 'static',
-    windowClass: 'modal-primary',
-    size: 'lg'
-  };
+
 
   columnDefinitions: Column[] = [];
   gridOptions: GridOption = {};
@@ -85,7 +80,7 @@ export class AppComponent {
   }
 
   openModalAdd() {
-    const modalRef = this.modalService.open(StudentAddComponent, this.modalConfigLG);
+    const modalRef = this.modalService.open(StudentAddComponent, this.config.modalConfigLG);
     modalRef.componentInstance.passEntry.subscribe((receivedEntry: any) => {
       console.log(receivedEntry);
       this.view();

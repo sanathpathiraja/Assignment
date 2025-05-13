@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { RestAPIService } from '../rest-api.service';
 import { ConfigService } from '../config.service';
+import { CountryISO, PhoneNumberFormat, SearchCountryField } from 'ngx-intl-tel-input';
 
 @Component({
   selector: 'app-student-add',
@@ -15,6 +16,11 @@ export class StudentAddComponent {
   addForm!: FormGroup;
 
   submitted = false;
+
+  SearchCountryField = SearchCountryField;
+  CountryISO = CountryISO;
+  PhoneNumberFormat = PhoneNumberFormat;
+  preferredCountries: CountryISO[] = [CountryISO.SriLanka];
 
 
   constructor(public activeModal: NgbActiveModal,
@@ -31,15 +37,24 @@ export class StudentAddComponent {
       FirstName: ['', [Validators.required]],
       LastName: ['', [Validators.required]],
       Mobile: [''],
-      Email: [100, [Validators.required]],
-      NIC: [true],
-      DateOfBirth: [true],
-      Address: [true]
+      Email: ['', [Validators.required]],
+      NIC: [],
+      DateOfBirth: [],
+      Address: []
     });
   }
 
   get f() {
     return this.addForm.controls;
+  }
+
+  FromOnChange(event) {
+    console.log(event, 'event')
+   
+
+    // this.minDate = this.config.dateFormatISOFn(Date)
+
+
   }
 
   save() {

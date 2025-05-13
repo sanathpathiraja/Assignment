@@ -3,7 +3,7 @@
   <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()">
   </button>
 </div>
-<div class="modal-body">
+<div class="modal-body" style="font-size: small;">
   <form [formGroup]="addForm">
 
     <div class="form-group">
@@ -11,7 +11,7 @@
       <input formControlName="FirstName"
              id="FirstName"
              type="text"
-             class="form-control" placeholder="Enter a First Name">
+             class="form-control form-control-sm" placeholder="Enter a First Name">
       <div *ngIf="f['FirstName'].touched && f['FirstName'].invalid" class="alert alert-danger">
         <div *ngIf="f['FirstName'].errors && f['FirstName'].errors['required']">First Name is required.</div>
       </div>
@@ -21,9 +21,46 @@
       <input formControlName="LastName"
              id="LastName"
              type="text"
-             class="form-control" placeholder="Enter a Last Name">
+             class="form-control form-control-sm" placeholder="Enter a Last Name">
       <div *ngIf="f['LastName'].touched && f['LastName'].invalid" class="alert alert-danger">
         <div *ngIf="f['LastName'].errors && f['LastName'].errors['required']">Last Name is required.</div>
+      </div>
+    </div>
+    <div class="form-group">
+     
+      <div class="row">
+        <div class="col">
+          <label for="Mobile" class="col-form-label">Mobile</label>
+          <ngx-intl-tel-input [cssClass]="'form-control form-control-sm'"
+                              [preferredCountries]="preferredCountries"
+                              [enableAutoCountrySelect]="true"
+                              [enablePlaceholder]="true"
+                              [searchCountryFlag]="true"
+                              [searchCountryField]="[SearchCountryField.Iso2,SearchCountryField.Name]"
+                              [selectFirstCountry]="false"
+                              [selectedCountryISO]="CountryISO.SriLanka"
+                              [maxLength]="15"
+                              [phoneValidation]="true"
+                              [separateDialCode]="true"
+                              [numberFormat]="PhoneNumberFormat.National"
+                              name="Mobile"
+                              formControlName="Mobile">
+          </ngx-intl-tel-input>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <label for="Address" class="col-form-label">NIC</label>
+            <input formControlName="NIC"
+                   id="NIC"
+                   type="text"
+                   class="form-control form-control-sm" placeholder="Enter a NIC">
+            <div *ngIf="f['NIC'].touched && f['NIC'].invalid" class="alert alert-danger">
+              <div *ngIf="f['NIC'].errors && f['NIC'].errors['required']">NIC is required.</div>
+            </div>
+
+          </div>
+        </div>
+
       </div>
     </div>
     <div class="form-group">
@@ -31,8 +68,29 @@
       <input formControlName="Address"
              id="Address"
              type="text"
-             class="form-control" placeholder="Enter a Address">
+             class="form-control form-control-sm" placeholder="Enter a Address">
 
+    </div>
+
+    <div class="form-group">
+      <label for="Email" class="col-form-label">Email</label>
+      <input formControlName="Email"
+             id="Email"
+             type="text"
+             class="form-control form-control-sm" placeholder="Enter a Email">
+
+    </div>
+    <div class="form-group">
+      <label for="DateOfBirth" class="col-form-label">Date Of Birth</label>
+      <div class="input-group mb-3">
+        <input matInput formControlName="DateOfBirth" class="form-control form-control-sm" placeholder="MM/DD/YYYY" [matDatepicker]="picker" id="DateOfBirth" (focus)="picker.open()" [placeholder]="" (dateInput)="FromOnChange($event.value)">
+        <mat-datepicker #picker></mat-datepicker>
+        <span class="input-group-text">
+          <i class="fa-regular fa-calendar-days" (click)="picker.open()"></i>
+        </span>
+      </div>
+
+     
     </div>
   </form>
 </div>
