@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
+import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { AngularGridInstance, Column, GridOption } from 'angular-slickgrid';
+import { StudentAddComponent } from './student-add/student-add.component';
+import { RestAPIService } from './rest-api.service';
+import { ConfigService } from './config.service';
 
 @Component({
   selector: 'app-root',
@@ -10,21 +14,32 @@ import { AngularGridInstance, Column, GridOption } from 'angular-slickgrid';
 export class AppComponent {
   title = 'web_app';
 
+  public modalConfigLG: NgbModalOptions = {
+    keyboard: true,
+    backdrop: 'static',
+    windowClass: 'modal-primary',
+    size: 'lg'
+  };
+
   columnDefinitions: Column[] = [];
   gridOptions: GridOption = {};
   dataset: any[] = [];
 
-  constructor() {
+  constructor(
+    private modalService: NgbModal,
+    public restApi: RestAPIService,
+    private config: ConfigService,
+  ) {
     this.prepareGrid();
   }
 
   prepareGrid() {
     this.columnDefinitions = [
-      { id: 'title', name: 'Title', field: 'title', sortable: true },
-      { id: 'duration', name: 'Duration (days)', field: 'duration', sortable: true },
-      { id: '%', name: '% Complete', field: 'percentComplete', sortable: true },
-      { id: 'start', name: 'Start', field: 'start' },
-      { id: 'finish', name: 'Finish', field: 'finish' },
+      { id: 'FirstName', name: 'First Name', field: 'FirstName', sortable: true, filterable: true },
+      { id: 'LastName', name: 'Last Name', field: 'LastName', sortable: true, filterable: true },
+      { id: 'Mobile', name: 'Mobile', field: 'Mobile', sortable: true, filterable: true },
+      { id: 'Email', name: 'Email', field: 'Email', filterable: true },
+      { id: 'NIC', name: 'NIC', field: 'NIC', sortable: true, filterable: true },
     ];
 
     this.gridOptions = {
@@ -33,7 +48,7 @@ export class AppComponent {
       gridWidth: '100%',
       gridHeight: (window.innerHeight * 90) / 100,
       enableFiltering: true,
-      headerRowHeight: 27,
+      //headerRowHeight: 20,
       enableGridMenu: false,
       enableCellNavigation: true,
       enableCheckboxSelector: false,
@@ -50,6 +65,32 @@ export class AppComponent {
       { id: 0, title: 'Task 1', duration: 45, percentComplete: 5, start: '2001-01-01', finish: '2001-01-31' },
       { id: 1, title: 'Task 2', duration: 33, percentComplete: 34, start: '2001-01-11', finish: '2001-02-04' },
     ];
+  }
+
+  view() {
+    let vm = this;
+    this.restApi.StudentView().subscribe((data: any[]) => {
+      data.map((item: any, i) => { item.id = i; });
+
+      setTimeout(() => {
+        vm.dataset = data;
+      }, 0)
+
+
+    }, error => {
+      console.log(error);
+
+    });
+
+  }
+
+  openModalAdd() {
+    const modalRef = this.modalService.open(StudentAddComponent, this.modalConfigLG);
+    modalRef.componentInstance.passEntry.subscribe((receivedEntry: any) => {
+      console.log(receivedEntry);
+      this.view();
+    });
+
   }
 }
 

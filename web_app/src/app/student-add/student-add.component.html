@@ -1,0 +1,46 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">Add Student</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()">
+  </button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="addForm">
+
+    <div class="form-group">
+      <label for="FirstName" class="col-form-label required">First Name</label>
+      <input formControlName="FirstName"
+             id="FirstName"
+             type="text"
+             class="form-control" placeholder="Enter a First Name">
+      <div *ngIf="f['FirstName'].touched && f['FirstName'].invalid" class="alert alert-danger">
+        <div *ngIf="f['FirstName'].errors && f['FirstName'].errors['required']">First Name is required.</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="LastName" class="col-form-label required">Last Name</label>
+      <input formControlName="LastName"
+             id="LastName"
+             type="text"
+             class="form-control" placeholder="Enter a Last Name">
+      <div *ngIf="f['LastName'].touched && f['LastName'].invalid" class="alert alert-danger">
+        <div *ngIf="f['LastName'].errors && f['LastName'].errors['required']">Last Name is required.</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="Address" class="col-form-label">Address</label>
+      <input formControlName="Address"
+             id="Address"
+             type="text"
+             class="form-control" placeholder="Enter a Address">
+
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-outline-primary btn-sm" [disabled]="addForm.invalid" type="button" (click)="save()">Save</button>
+  <button class="btn btn-outline-secondary btn-sm" type="button" (click)="close()">Close</button>
+</div>
+
+
+
+
