@@ -4,6 +4,20 @@ using web_api.Repositories.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("EnableCORS", builder =>
+    {
+        builder.AllowAnyOrigin()
+        .AllowAnyHeader()
+        .AllowAnyMethod();
+    });
+});
+
+builder.Services.AddControllers().AddJsonOptions(x => {
+    x.JsonSerializerOptions.PropertyNamingPolicy = null;
+});
+
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -23,6 +37,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("EnableCORS");
 
 app.UseAuthorization();
 

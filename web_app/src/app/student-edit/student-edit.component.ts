@@ -8,14 +8,14 @@ import { FilePondOptions } from 'filepond';
 import { FilePondComponent } from 'ngx-filepond';
 
 @Component({
-  selector: 'app-student-add',
+  selector: 'app-student-edit',
   standalone: false,
-  templateUrl: './student-add.component.html',
-  styleUrl: './student-add.component.css'
+  templateUrl: './student-edit.component.html',
+  styleUrl: './student-edit.component.css'
 })
-export class StudentAddComponent {
+export class StudentEditComponent {
   @Output() passEntry: EventEmitter<any> = new EventEmitter();
-  addForm!: FormGroup;
+  editForm!: FormGroup;
 
   submitted = false;
 
@@ -27,7 +27,7 @@ export class StudentAddComponent {
   profileImage: any;
 
   @ViewChild('myPond')
-    myPond!: FilePondComponent;
+  myPond!: FilePondComponent;
 
   pondOptions: FilePondOptions = {
     allowMultiple: false,
@@ -35,13 +35,13 @@ export class StudentAddComponent {
   }
 
   pondFiles: FilePondOptions["files"] = [
-
+    
   ]
 
   pondHandleAddFile(event: any) {
     console.log('A file was added', event);
     //this.profileImage = {
-      
+
     //  Photo: event.file.file,
     //  FileName: event.file.filename,
     //  ContentType: event.file.fileType
@@ -49,6 +49,8 @@ export class StudentAddComponent {
     this.profileImage = event.file.file;
 
   }
+
+  SelectedRowData: any;
 
 
 
@@ -58,29 +60,41 @@ export class StudentAddComponent {
     public restApi: RestAPIService,
     private config: ConfigService,
   ) {
-    
+
   }
 
   ngOnInit(): void {
 
-    this.addForm = this.formBuilder.group({
-      FirstName: ['', [Validators.required]],
-      LastName: ['', [Validators.required]],
-      Mobile: [''],
-      Email: [''],
-      NIC: ['', [Validators.required]],
-      DateOfBirth: [, [Validators.required]],
-      Address: []
+    this.editForm = this.formBuilder.group({
+      FirstName: [this.SelectedRowData['FirstName'], [Validators.required]],
+      LastName: [this.SelectedRowData['LastName'], [Validators.required]],
+      Mobile: [this.SelectedRowData['Mobile']],
+      Email: [this.SelectedRowData['Email']],
+      NIC: [this.SelectedRowData['NIC'], [Validators.required]],
+      DateOfBirth: [this.SelectedRowData['DateOfBirth'], [Validators.required]],
+      Address: [this.SelectedRowData['Address']]
     });
+
+    if (this.SelectedRowData['PhotoBase64']) {
+      this.pondFiles = [
+        {
+          source: this.SelectedRowData['PhotoBase64'],
+          options: {
+            type: 'local'
+          }
+        }
+      ]
+    }
+    
   }
 
   get f() {
-    return this.addForm.controls;
+    return this.editForm.controls;
   }
 
   FromOnChange(event) {
     console.log(event, 'event')
-   
+
 
     // this.minDate = this.config.dateFormatISOFn(Date)
 
@@ -91,31 +105,31 @@ export class StudentAddComponent {
   save() {
     this.submitted = true;
 
-    if (this.addForm.valid) {
+    if (this.editForm.valid) {
 
-      let FirstName = this.addForm.value.FirstName;
-      let LastName = this.addForm.value.LastName;
-      let Mobile = this.addForm.value.Mobile?.e164Number ? this.addForm.value.Mobile?.e164Number : null;
-      let Email = this.addForm.value.Email;
+      let FirstName = this.editForm.value.FirstName;
+      let LastName = this.editForm.value.LastName;
+      let Mobile = this.editForm.value.Mobile?.e164Number ? this.editForm.value.Mobile?.e164Number : null;
+      let Email = this.editForm.value.Email;
 
-      let NIC = this.addForm.value.NIC;
-      let DateOfBirth :any = this.config.dateFormatFn(this.addForm.value.DateOfBirth);
-      let Address = this.addForm.value.Address;
+      let NIC = this.editForm.value.NIC;
+      let DateOfBirth: any = this.config.dateFormatFn(this.editForm.value.DateOfBirth);
+      let Address = this.editForm.value.Address;
       let Photos = this.profileImage;
-      
-      this.restApi.StudentAdd(FirstName, LastName, Mobile, Email, NIC, DateOfBirth, Address, Photos).subscribe((data = {}) => {
+
+      this.restApi.StudentEdit(this.SelectedRowData['RecId'],FirstName, LastName, Mobile, Email, NIC, DateOfBirth, Address, Photos).subscribe((data = {}) => {
         if (data) {
 
-          this.config.showSuccess("Successfully inserted");
+          this.config.showSuccess("Successfully updated");
           this.passEntry.emit(data);
           this.activeModal.dismiss();
         }
         else {
-          this.config.showError("Insert failed");
+          this.config.showError("Update failed");
         }
       }, error => {
         console.log(error);
-        this.config.showError("Insert failed");
+        this.config.showError("Update failed");
       });
     }
   }

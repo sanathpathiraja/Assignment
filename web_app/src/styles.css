@@ -100,3 +100,26 @@ ngx-intl-tel-input input::placeholder {
 ngx-intl-tel-input input[disabled] {
   background-color: #e5eaf1;
 }
+
+
+/*set validation mandatory red star mark*/
+.col-form-label.required::after {
+  content: '*';
+  color: red;
+}
+
+.blue {
+  color: #0D6DFB;
+}
+
+.red {
+  color: #D13342;
+}
+
+.cursor {
+  cursor: pointer;
+}
+
+.slickgrid-container .grid-canvas .slick-cell.selected {
+  background-color: #8cb9fb !important;
+}

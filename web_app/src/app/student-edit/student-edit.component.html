@@ -1,10 +1,10 @@
 <div class="modal-header">
-  <h4 class="modal-title" id="modal-basic-title">Add Student</h4>
+  <h4 class="modal-title" id="modal-basic-title">Edit Student</h4>
   <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()">
   </button>
 </div>
 <div class="modal-body" style="font-size: small;">
-  <form [formGroup]="addForm">
+  <form [formGroup]="editForm">
 
     <div class="form-group">
       <label for="FirstName" class="col-form-label required">First Name</label>
@@ -112,10 +112,10 @@
     All fields marked with an asterisk (*) are required
   </div>
   <div>
-      <button class="btn btn-outline-primary btn-sm me-1" [disabled]="addForm.invalid" type="button" (click)="save()">Save</button>
-      <button class="btn btn-outline-secondary btn-sm" type="button" (click)="close()">Close</button>
+    <button class="btn btn-outline-primary btn-sm me-1" [disabled]="editForm.invalid" type="button" (click)="save()">Save</button>
+    <button class="btn btn-outline-secondary btn-sm" type="button" (click)="close()">Close</button>
   </div>
- 
+
 </div>
 
 

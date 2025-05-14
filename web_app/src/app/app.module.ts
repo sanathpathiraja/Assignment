@@ -20,6 +20,15 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 
+import { FilePondModule, registerPlugin } from 'ngx-filepond';
+import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
+import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
+import { DatePipe } from '@angular/common';
+import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
+import { StudentEditComponent } from './student-edit/student-edit.component';
+registerPlugin(FilePondPluginFileValidateType, FilePondPluginImagePreview);
+
+
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
@@ -27,7 +36,10 @@ export function HttpLoaderFactory(http: HttpClient) {
 @NgModule({
   declarations: [
     AppComponent,
-    StudentAddComponent
+    StudentAddComponent,
+    ConfirmModalComponent,
+    StudentEditComponent
+     
   ],
   imports: [
     BrowserModule,
@@ -47,9 +59,11 @@ export function HttpLoaderFactory(http: HttpClient) {
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     NgxIntlTelInputModule,
-    MatFormFieldModule, MatInputModule, MatDatepickerModule, MatIconModule
+    MatFormFieldModule, MatInputModule, MatDatepickerModule, MatIconModule,
+
+    FilePondModule
   ],
-  providers: [provideNativeDateAdapter()],
+  providers: [provideNativeDateAdapter(), DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

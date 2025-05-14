@@ -1,4 +1,4 @@
-::ng-deep .cdk-overlay-container{
+::ng-deep .cdk-overlay-container {
   z-index: 2000;
 }
 
@@ -9,6 +9,3 @@
 ::ng-deep.filepond--wrapper {
   width: 300px;
 }
-
-
-

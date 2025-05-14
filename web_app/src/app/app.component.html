@@ -14,16 +14,58 @@
       </div>
       <div class="col-md-7">
 
-        <angular-slickgrid gridId="grid1"
+        <angular-slickgrid #grid1 gridId="slickGrid"
                            [columns]="columnDefinitions"
                            [options]="gridOptions"
-                           [dataset]="dataset">
+                           [dataset]="dataset"
+                           (onAngularGridCreated)="angularGridReady($event.detail)"
+                           (onSelectedRowsChanged)="onSelectedRowsChanged($event.detail.eventData, $event.detail.args)">
         </angular-slickgrid>
 
 
 
       </div>
-      <div class="col-md-4"></div>
+      <div class="col-md-4">
+
+        <div *ngIf="SelectedRowData?.RecId">
+
+          <div class="card">
+            <div class="card-header">
+              
+              <div class="row">
+                <div class="col-md-2"><button class="btn btn-outline-primary btn-sm" (click)="prevPage()" [disabled]="currentPage === 1">Previous</button></div>
+                <div class="col-md-8"><h5>Student Detail</h5></div>
+                <div class="col-md-2"><button class="btn btn-outline-primary btn-sm" (click)="nextPage()" [disabled]="currentPage === dataset.length">Next</button></div>
+              </div>
+
+              
+            </div>
+            <div class="card-body">
+              <div *ngIf="SelectedRowData.PhotoBase64">
+                <img [src]="SelectedRowData.PhotoBase64" class="w-25" alt="...">
+              </div>
+              <div *ngIf="!SelectedRowData.PhotoBase64">
+                <img src="./blank-avatar.png" class="w-25" alt="...">
+              </div>
+              <p>First Name:{{SelectedRowData.FirstName}}</p>
+              <p>Last Name:{{SelectedRowData.LastName}}</p>
+              <p>Mobile:{{SelectedRowData.Mobile}}</p>
+              <p>Email:{{SelectedRowData.Email}}</p>
+              <p>NIC:{{SelectedRowData.NIC}}</p>
+              <p>Date Of Birth:{{config.dateFormatFn(SelectedRowData.DateOfBirth)}}</p>
+              <p>Address:{{SelectedRowData.Address}}</p>
+              
+            </div>
+          </div>
+
+
+          <div class="row">
+            
+          </div>
+        </div>
+
+
+      </div>
     </div>
 
   </div>
