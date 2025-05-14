@@ -99,7 +99,8 @@
       <file-pond class="avatar cursor" #myPond
                  [options]="pondOptions"
                  [files]="pondFiles"
-                 (onaddfile)="pondHandleAddFile($event)">
+                 (onaddfile)="pondHandleAddFile($event)"
+                 (onremovefile)="pondHandleRemoveFile($event)">
       </file-pond>
 
     </div>

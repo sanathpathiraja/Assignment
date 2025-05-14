@@ -164,8 +164,7 @@ namespace web_api.Repositories
                 );
 
                 // Step 2: Optional - Delete existing photos
-                if (student.Photos != null && student.Photos.Any())
-                {
+               
                     var deletePhotoSp = "spDeleteStudentPhotos";
                     var deleteParams = new DynamicParameters();
                     deleteParams.Add("StudentId", student.RecId);
@@ -177,6 +176,8 @@ namespace web_api.Repositories
                         commandType: CommandType.StoredProcedure
                     );
 
+                if (student.Photos != null && student.Photos.Any())
+                {
                     // Step 3: Insert new photos
                     foreach (var photo in student.Photos)
                     {

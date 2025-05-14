@@ -50,6 +50,11 @@ export class StudentEditComponent {
 
   }
 
+  pondHandleRemoveFile(event: any) {
+    console.log('Remove', event);
+    this.profileImage = null;
+  }
+
   SelectedRowData: any;
 
 
